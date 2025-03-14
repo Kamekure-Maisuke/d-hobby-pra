@@ -1,0 +1,13 @@
+{
+	"authors": [
+		"Kamekure-Maisuke"
+	],
+	"copyright": "Copyright © 2025, Kamekure-Maisuke",
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "chap2",
+  "targetType": "executable",
+  "mainSourceFile": "source/app.d",
+  "sourcePaths": ["source"],
+  "importPaths": ["source"]
+}
