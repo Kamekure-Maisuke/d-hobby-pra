@@ -3,6 +3,10 @@ import std.stdio;
 // 比較系
 import std.algorithm.comparison;
 
+// イテレーション系
+import std.algorithm.iteration;
+import std.array;
+
 void main()
 {
   writeln("test");
@@ -12,11 +16,11 @@ void main()
 unittest
 {
   // 等価
-  int[] a = [3,4,5];
-  int[] b = [3,4];
-  int[] c = [3,4,5];
-  assert(equal(a,b) == false);
-  assert(equal(a,c) == true);
+  int[] a = [3, 4, 5];
+  int[] b = [3, 4];
+  int[] c = [3, 4, 5];
+  assert(equal(a, b) == false);
+  assert(equal(a, c) == true);
 
   // 比較結果
   assert(cmp("Hello", "hello") != 0);
@@ -33,4 +37,40 @@ unittest
   // 選択肢の中にあるか確認。switch同様の処理も可能。
   string msg = "こんにちは";
   assert(msg.among("おはよう", "こんにちは", "こんばんは"));
+}
+
+// イテレーション系のテスト
+unittest
+{
+  int[] scores = [3, 4, 5];
+
+  // 「関数適用」
+  // Dのmapはarray型ではなくrangeを返す。遅延評価。
+  // 中間配列を作らないため。計算効率の観点から。
+  // 最後のarray呼び出しで初めて実際の計算が実行。std.arrayのimportが必要。
+  // パイプラインで繋げられたりできる。takeで数を指定できたりする。
+  auto doubleScores = scores.map!(s => s * 2);
+  assert(doubleScores.array == [6, 8, 10]);
+
+  // 抽出
+  auto evens = scores.filter!(s => s % 2 == 0);
+  assert(evens.array == [4]);
+
+  // 累積処理
+  // 別途foldもある。
+  auto sum = reduce!"a + b"(scores);
+  assert(sum == 12);
+
+  // 連結
+  // 例: 2次元配列を1次元化
+  int[][] sheets = [[1, 1], [1, 2], [1, 3]];
+  auto joined = sheets.joiner;
+  assert(joined.array == [1, 1, 1, 2, 1, 3]);
+
+  // 文字列連結
+  string[] members = ["白石麻衣", "橋本奈々美", "松村沙友理"];
+  auto joinedMember = members.joiner(" ");
+  assert(joinedMember.array == "白石麻衣 橋本奈々美 松村沙友理");
+
+  // 別途chunkByも。
 }
