@@ -7,6 +7,9 @@ import std.algorithm.comparison;
 import std.algorithm.iteration;
 import std.array;
 
+// 検索系
+import std.algorithm.searching;
+
 void main()
 {
   writeln("test");
@@ -73,4 +76,24 @@ unittest
   assert(joinedMember.array == "白石麻衣 橋本奈々美 松村沙友理");
 
   // 別途chunkByも。
+}
+
+// 検索系のテスト
+unittest
+{
+  int[] scores = [1,2,3,4,5];
+  string text = "白石麻衣";
+
+  // 要素が含まれているか
+  // 関数とテンプレートがあり、テンプレートは条件で検索。
+  assert(canFind(scores, 4) == true);
+  assert(canFind(scores, 6) == false);
+  assert(canFind(text, "白") == true);
+  assert(canFind!(a => a > 3)(scores) == true);
+  assert(canFind!(a => a > 5)(scores) == false);
+
+  // 要素で分割
+  auto split = findSplit(scores, [3]);
+  assert(split[0] == [1,2]);
+  assert(split[1] == [3]);
 }
