@@ -10,6 +10,9 @@ import std.array;
 // 検索系
 import std.algorithm.searching;
 
+// 集合
+import std.algorithm.sorting;
+
 void main()
 {
   writeln("test");
@@ -96,4 +99,33 @@ unittest
   auto split = findSplit(scores, [3]);
   assert(split[0] == [1,2]);
   assert(split[1] == [3]);
+}
+
+// ソート系のテスト
+unittest
+{
+  int[] arr = [3,1,2];
+
+  // 昇順
+  // ※sortは破壊的
+  auto result = arr.sort();
+  assert(arr == [1,2,3]);
+  assert(result.array == [1,2,3]);
+
+  // 降順
+  // ※sortは破壊的
+  auto result2 = arr.sort!("a > b");
+  assert(arr == [3,2,1]);
+  assert(result2.array == [3,2,1]);
+
+  // 上位N個の要素取得
+  int[] top1 = new int[1];
+  topNCopy(arr, top1);
+  assert(top1 == [1]);
+
+  // ソート済みか確認
+  int[] sorted = [4,5,6];
+  int[] unsorted = [4,6,5];
+  assert(isSorted(sorted) == true);
+  assert(isSorted(unsorted) == false);
 }
