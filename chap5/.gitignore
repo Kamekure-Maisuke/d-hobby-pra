@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/chap5
+chap5.so
+chap5.dylib
+chap5.dll
+chap5.a
+chap5.lib
+chap5-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
